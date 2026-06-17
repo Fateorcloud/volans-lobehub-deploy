@@ -7,7 +7,7 @@
 服务器本机访问测试，不默认发布公网域名。
 
 旧的 NewAPI、Open WebUI、GPT Image Playground、Caddy 图站不再属于当前项目。
-这套旧链路已经备份在 GitHub 分支 `codex/legacy-ai-stack-backup`，需要复用时从该
+这套旧链路已经备份在 GitHub 仓库 `Fateorcloud/volans-ai-platform-deploy` 的 `codex/legacy-ai-stack-backup` 分支，需要复用时从该
 分支恢复。xui 和 NAT 出站代理被保留为独立可选网络组件，但不属于 LobeHub AI 平台
 核心栈，默认部署不会安装。
 

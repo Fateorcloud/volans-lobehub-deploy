@@ -8,7 +8,7 @@ local-only first test phase.
 
 The previous NewAPI, Open WebUI, GPT Image Playground, and Caddy image site have
 been removed from the current project. The old deployable chain is backed up in
-the GitHub branch `codex/legacy-ai-stack-backup`. xui and the NAT egress proxy
+the GitHub repo `Fateorcloud/volans-ai-platform-deploy`, branch `codex/legacy-ai-stack-backup`. xui and the NAT egress proxy
 are retained as explicit optional network components, but they are not part of
 the LobeHub AI platform core stack.
 
