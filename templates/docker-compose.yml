@@ -161,6 +161,23 @@ services:
     networks:
       - lobe-network
 
+  # Optional public access via Cloudflare Tunnel (no open ports, TLS at the edge).
+  # Enable: set COMPOSE_PROFILES=tunnel and CF_TUNNEL_TOKEN in .env, then add the
+  # public hostnames in the Cloudflare Zero Trust dashboard:
+  #   chat.<domain> -> http://127.0.0.1:3210   (LobeHub app)
+  #   s3.<domain>   -> http://127.0.0.1:9000   (RustFS, for browser file uploads)
+  # network_mode: host so it can reach the host-networked lobe app and rustfs.
+  cloudflared:
+    image: cloudflare/cloudflared:${CLOUDFLARED_VERSION:-latest}
+    container_name: cloudflare-tunnel
+    restart: always
+    network_mode: host
+    logging: *default-logging
+    command: tunnel --no-autoupdate run
+    environment:
+      TUNNEL_TOKEN: ${CF_TUNNEL_TOKEN:-}
+    profiles: ["tunnel"]
+
 networks:
   lobe-network:
     driver: bridge

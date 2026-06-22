@@ -168,16 +168,14 @@ RustFS 备份
 
 ## 公网发布
 
-本模板第一阶段不发布公网。后续如果要挂 `chat.example.com`：
-
-1. 先确认 LobeHub 登录/认证策略。
-2. 给 LobeHub 反代 `127.0.0.1:3210`。
-3. 给 S3/RustFS 配置浏览器可访问且受控的 endpoint。
-4. 再把 `.env` 中的 `APP_URL` 和 `S3_ENDPOINT` 改成正式 URL。
+要把平台公开给一组用户，推荐用 **Cloudflare Tunnel**（不开公网端口、TLS 在边缘、首屏更快）：
+App 走 `chat.<域名>`、文件存储走 `s3.<域名>`，用 `AUTH_ALLOWED_EMAILS` 白名单控制注册。
+完整步骤见 [公开部署：Cloudflare Tunnel + 域名](docs/public-access.md)。
 
 ## 更多文档
 
 - [部署流程](docs/deployment.md)
+- [公开部署（Cloudflare Tunnel + 域名）](docs/public-access.md)
 - [运维手册](docs/operations.md)
 - [可选 xui/NAT 网络组件](docs/network-components.md)
 - [排障](docs/troubleshooting.md)

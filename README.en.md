@@ -151,14 +151,15 @@ data, then run the verification command. Never commit these private artifacts.
 
 ## Public Exposure
 
-This template does not publish a public hostname in the first phase. Before
-adding `chat.example.com`, configure LobeHub authentication, reverse proxy
-`127.0.0.1:3210`, provide a browser-accessible S3 endpoint, and update `APP_URL`
-plus `S3_ENDPOINT`.
+To open the platform to a group of users, use **Cloudflare Tunnel** (no open
+ports, TLS at the edge, faster first paint): serve the app at `chat.<domain>` and
+storage at `s3.<domain>`, and gate sign-up with `AUTH_ALLOWED_EMAILS`. See the
+full guide: [Public access: Cloudflare Tunnel + domain](docs/public-access.md).
 
 ## More Docs
 
 - [Deployment flow](docs/deployment.md)
+- [Public access (Cloudflare Tunnel + domain)](docs/public-access.md)
 - [Operations](docs/operations.md)
 - [Optional xui/NAT network components](docs/network-components.md)
 - [Troubleshooting](docs/troubleshooting.md)
