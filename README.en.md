@@ -36,8 +36,8 @@ services bind to `127.0.0.1` only.
 On a fresh Ubuntu 22.04/24.04 VPS:
 
 ```bash
-git clone https://github.com/<your-name>/volans-ai-platform-deploy.git
-cd volans-ai-platform-deploy
+git clone https://github.com/<your-name>/volans-lobehub-deploy.git
+cd volans-lobehub-deploy
 cp .env.example .env
 nano .env
 sudo bash deploy.sh fresh --yes

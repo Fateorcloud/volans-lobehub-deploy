@@ -44,8 +44,8 @@ LobeHub 容器使用 host network，是为了让 `S3_ENDPOINT=http://127.0.0.1:9
 在一台新的 Ubuntu 22.04/24.04 VPS 上：
 
 ```bash
-git clone https://github.com/<your-name>/volans-ai-platform-deploy.git
-cd volans-ai-platform-deploy
+git clone https://github.com/<your-name>/volans-lobehub-deploy.git
+cd volans-lobehub-deploy
 cp .env.example .env
 nano .env
 sudo bash deploy.sh fresh --yes
