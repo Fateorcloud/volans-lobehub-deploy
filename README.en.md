@@ -49,43 +49,41 @@ workflow app platforms. Use LibreChat, LiteLLM, or Dify for those.
 On a fresh Ubuntu 22.04/24.04 VPS:
 
 ```bash
-git clone https://github.com/<your-name>/volans-lobehub-deploy.git
+git clone https://github.com/Fateorcloud/volans-lobehub-deploy.git
 cd volans-lobehub-deploy
 cp .env.example .env
 nano .env
 sudo bash deploy.sh fresh --yes
 ```
 
-Replace at least:
+### Required: 6 secrets (none may keep the `CHANGE_ME...` default — preflight rejects them)
 
-```text
-KEY_VAULTS_SECRET
-AUTH_SECRET
-POSTGRES_PASSWORD
-RUSTFS_ACCESS_KEY
-RUSTFS_SECRET_KEY
-SEARXNG_SECRET
-```
+| Variable | What it protects | Generate with |
+|---|---|---|
+| `KEY_VAULTS_SECRET` | Encrypts the API keys users store server-side (per-user key vault) | `openssl rand -base64 32` |
+| `AUTH_SECRET` | Signs login sessions (tamper protection) | `openssl rand -base64 32` |
+| `POSTGRES_PASSWORD` | PostgreSQL database password | `openssl rand -hex 32` |
+| `RUSTFS_ACCESS_KEY` | Object-storage (files/images) access key | `openssl rand -hex 16` |
+| `RUSTFS_SECRET_KEY` | Object-storage secret key | `openssl rand -hex 32` |
+| `SEARXNG_SECRET` | Signing secret for the built-in search service | `openssl rand -hex 32` |
 
-Generate secrets with:
+Generate them all at once and paste the output into `.env`:
 
 ```bash
-# KEY_VAULTS_SECRET and AUTH_SECRET
-openssl rand -base64 32
-
-# POSTGRES_PASSWORD, RUSTFS_SECRET_KEY, and SEARXNG_SECRET can use hex
-openssl rand -hex 32
+for v in KEY_VAULTS_SECRET AUTH_SECRET; do echo "$v=$(openssl rand -base64 32)"; done
+for v in POSTGRES_PASSWORD RUSTFS_SECRET_KEY SEARXNG_SECRET; do echo "$v=$(openssl rand -hex 32)"; done
+echo "RUSTFS_ACCESS_KEY=$(openssl rand -hex 16)"
 ```
 
-Fill provider keys as needed:
+> **SSH port**: the deploy enables the UFW firewall and auto-allows the port sshd is currently listening on. If your SSH runs on a non-standard port, also set `SSH_PORT` in `.env` as a belt-and-suspenders (default 22).
+
+Model provider keys are optional (it starts without them, but can't chat until at least one is set); leave unused ones empty:
 
 ```text
-OPENAI_API_KEY
-ANTHROPIC_API_KEY
-GOOGLE_API_KEY
-DEEPSEEK_API_KEY
-OPENROUTER_API_KEY
+OPENAI_API_KEY / ANTHROPIC_API_KEY / GOOGLE_API_KEY / DEEPSEEK_API_KEY / OPENROUTER_API_KEY ...
 ```
+
+These form a server-side shared pool: all logged-in users can use them, and each user may add their own private key in Settings.
 
 ## Step 2: Publish on your domain (Cloudflare Tunnel)
 
